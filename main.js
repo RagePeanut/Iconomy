@@ -3,6 +3,7 @@ const icons = require('./icons/icons');
 let dialog;
 let previews;
 let selected;
+let styleFilter;
 
 function insertIconsFunctionHandler(selection) {
     if(dialog == null) {
@@ -12,6 +13,15 @@ function insertIconsFunctionHandler(selection) {
 <form method="dialog">
     <h1>Fast Icons</h1>
     <input id="search" type="text" placeholder="Search an icon...">
+    <div>
+        <h2>Pack</h2>
+        <select id="style">
+            <option value="all">All</option>
+            <option value="regular">Regular</option>
+            <option value="solid">Solid</option>
+            <option value="brands">Brands</option>
+        </select>
+    </div>
     <div id="previews-wrapper">
         <div id="previews">Nothing to show yet.</div>
     </div>
@@ -34,6 +44,12 @@ function insertIconsFunctionHandler(selection) {
 
         const submitButton = document.getElementById('submit');
         submitButton.addEventListener('click', onsubmit);
+
+        styleFilter = document.getElementById('style');
+        styleFilter.value = 'all';
+        styleFilter.addEventListener('change', () => {
+            updatePreviews(searchBar.value);
+        });
 
         selected = document.getElementById('selected');
         selected.addEventListener('click', event => {
@@ -84,12 +100,12 @@ function onsubmit() {
 function updatePreviews(search) {
     const regex = new RegExp(search.replace(/[ -]+/g, ''), 'i');
     previews.innerHTML = '';
-    Object.keys(icons).forEach(async iconName => {
-        const currentIcon = icons[iconName];
-        if(regex.test(iconName) || currentIcon.search.some(term => regex.test(term))) {
-            currentIcon.packs.forEach(async iconPack => {
-                currentIcon.svg[iconPack].styles.forEach(async iconStyle => {
-                    addPreview(iconName, iconPack, iconStyle);
+    Object.keys(icons).forEach(async name => {
+        const currentIcon = icons[name];
+        if(regex.test(name) || currentIcon.search.some(term => regex.test(term))) {
+            currentIcon.packs.forEach(async pack => {
+                currentIcon.svg[pack].styles.forEach(async style => {
+                    if(['all', style].includes(styleFilter.value)) addPreview(name, pack, style);
                 });
             });
         }
