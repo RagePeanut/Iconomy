@@ -1,3 +1,6 @@
+const { Path, Color } = require('scenegraph');
+const commands = require('commands');
+
 const icons = require('./icons/icons');
 
 let dialog;
@@ -43,7 +46,7 @@ function insertIconsFunctionHandler(selection) {
         cancelButton.addEventListener('click', oncancel);
 
         const submitButton = document.getElementById('submit');
-        submitButton.addEventListener('click', onsubmit);
+        submitButton.addEventListener('click', () => onsubmit(selection));
 
         styleFilter = document.getElementById('style');
         styleFilter.value = 'all';
@@ -93,7 +96,12 @@ function oncancel() {
     dialog.close('Cancelled');
 }
 
-function onsubmit() {
+function onsubmit(selection) {
+    addIcons(Array.from(selected.childNodes), selection);
+    selected.innerHTML = '';
+    document.getElementById('search').value = '';
+    previews.innerHTML = 'Nothing to show yet.';
+    styleFilter.value = 'all';
     dialog.close('Submitted');
 }
 
@@ -125,6 +133,44 @@ function addPreview(name, pack, style) {
     preview.appendChild(icon);
 
     previews.appendChild(preview);
+}
+
+function addIcons(selectedIcons, selection) {
+    const selectedItems = [];
+    let offset = 0;
+    selectedIcons.forEach(icon => {
+        const name = icon.getAttribute('name');
+        const style = icon.classList.item(1);
+        const pack = icon.classList.item(2);
+        const label = icon.childNodes.item(0).getAttribute('alt');
+        offset = addIcon(name, pack, style, label, offset, selection);
+        selectedItems.push(selection.items[0]);
+    });
+    selection.items = selectedItems;
+    if(selection.items.length > 1) commands.alignVerticalCenter();
+}
+
+function addIcon(name, pack, style, label, offset, selection) {
+    selection.items = null;
+    icons[name].svg[pack][style].forEach(part => {
+        if(part.tag === 'path') {
+            const path = createPath(part.data, 'Black');
+            selection.insertionParent.addChild(path);
+            selection.items = selection.items.concat([path]);
+        }
+    });
+    if(selection.items.length > 1) commands.group();
+    const icon = selection.items[0];
+    icon.name = label;
+    icon.moveInParentCoordinates(offset, 0);
+    return offset + icon.localBounds.width;
+}
+
+function createPath(pathData, color) {
+    const path = new Path();
+    path.pathData = pathData;
+    path.fill = new Color(color);
+    return path;
 }
 
 module.exports = {
