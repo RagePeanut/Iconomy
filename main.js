@@ -36,6 +36,13 @@ function insertIconsFunctionHandler(selection) {
         submitButton.addEventListener('click', onsubmit);
 
         selected = document.getElementById('selected');
+        selected.addEventListener('click', event => {
+            let toRemove;
+            if(event.target.classList.contains('selected-preview')) toRemove = event.target;
+            else if(event.target.classList.contains('selected-icon')) toRemove = event.target.parentNode;
+            else return;
+            selected.removeChild(toRemove);
+        });
 
         previews = document.getElementById('previews');
         previews.addEventListener('click', event => {
