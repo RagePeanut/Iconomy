@@ -7,6 +7,8 @@ let dialog;
 let previews;
 let selected;
 let styleFilter;
+let heightField;
+let widthField;
 
 function insertIconsFunctionHandler(selection) {
     if(dialog == null) {
@@ -24,6 +26,16 @@ function insertIconsFunctionHandler(selection) {
             <option value="solid">Solid</option>
             <option value="brands">Brands</option>
         </select>
+    </div>
+    <div id="size" class="row">
+        <div>
+            <h2>Height</h2>
+            <input id="height" type="number" placeholder="40">
+        </div>
+        <div>
+            <h2>Max Width</h2>
+            <input id="width" type="number" placeholder="40">
+        </div>
     </div>
     <div id="previews-wrapper">
         <div id="previews">Nothing to show yet.</div>
@@ -52,6 +64,12 @@ function insertIconsFunctionHandler(selection) {
         styleFilter.value = 'all';
         styleFilter.addEventListener('change', () => {
             updatePreviews(searchBar.value);
+        });
+
+        heightField = document.getElementById('height');
+        widthField = document.getElementById('width');
+        heightField.addEventListener('keyup', () => {
+            widthField.setAttribute('placeholder', heightField.value);
         });
 
         selected = document.getElementById('selected');
@@ -137,20 +155,21 @@ function addPreview(name, pack, style) {
 
 function addIcons(selectedIcons, selection) {
     const selectedItems = [];
-    let offset = 0;
+    let padding = 0, leftOffset = 0;
     selectedIcons.forEach(icon => {
         const name = icon.getAttribute('name');
         const style = icon.classList.item(1);
         const pack = icon.classList.item(2);
         const label = icon.childNodes.item(0).getAttribute('alt');
-        offset = addIcon(name, pack, style, label, offset, selection);
+        leftOffset += addIcon(name, pack, style, label, leftOffset, padding, selection);
         selectedItems.push(selection.items[0]);
+        padding = leftOffset / selectedItems.length * 0.3;
     });
     selection.items = selectedItems;
     if(selection.items.length > 1) commands.alignVerticalCenter();
 }
 
-function addIcon(name, pack, style, label, offset, selection) {
+function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     selection.items = null;
     icons[name].svg[pack][style].forEach(part => {
         if(part.tag === 'path') {
@@ -162,8 +181,17 @@ function addIcon(name, pack, style, label, offset, selection) {
     if(selection.items.length > 1) commands.group();
     const icon = selection.items[0];
     icon.name = label;
-    icon.moveInParentCoordinates(offset, 0);
-    return offset + icon.localBounds.width;
+    icon.moveInParentCoordinates(leftOffset + padding, 0);
+    const localBounds = icon.localBounds;
+    let height = (!isNaN(heightField.value) && heightField.value) || 40;
+    let width = height * localBounds.width / localBounds.height;
+    if(!widthField.value || isNaN(widthField.value)) widthField.value = height;
+    if(width > widthField.value) {
+        width = widthField.value;
+        height = width * localBounds.height / localBounds.width;
+    }
+    icon.resize(width, height);
+    return padding + width;
 }
 
 function createPath(pathData, color) {

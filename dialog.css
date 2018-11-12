@@ -67,6 +67,16 @@ form footer {
   opacity: 0.5;
 }
 
+#size {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#size div {
+  width: 50%;
+}
+
 #selected, #previews {
   display: -webkit-box;
   display: -ms-flexbox;
