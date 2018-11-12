@@ -7,10 +7,13 @@ function insertIconsFunctionHandler(selection) {
     if(dialog == null) {
         dialog = document.createElement('dialog');
         dialog.innerHTML = `
+<link rel="stylesheet" type="text/css" href="dialog.css">
 <form method="dialog">
     <h1>Fast Icons</h1>
     <input id="search" type="text" placeholder="Search an icon...">
-    <div id="previews">Nothing to show yet.</div>
+    <div id="previews-wrapper">
+        <div id="previews">Nothing to show yet.</div>
+    </div>
     <footer>
         <button id="submit" type="submit" uxp-variant="cta">Add</button>
         <button id="cancel" uxp-variant="primary">Cancel</button>
@@ -44,6 +47,7 @@ function onsubmit() {
 
 function updatePreviews(search) {
     const regex = new RegExp(search.replace(/[ -]+/g, ''), 'i');
+    previews.innerHTML = '';
     Object.keys(icons).forEach(async iconName => {
         const currentIcon = icons[iconName];
         if(regex.test(iconName) || currentIcon.search.some(term => regex.test(term))) {
@@ -57,7 +61,18 @@ function updatePreviews(search) {
 }
 
 function addPreview(name, pack, style) {
-    console.log(name, pack, style);
+    const preview = document.createElement('div');
+    preview.classList.add('preview', style, pack);
+    preview.setAttribute('name', name);
+
+    const icon = document.createElement('img');
+    icon.src = 'icons/' + pack + '/' + style + '/' + name + '.png';
+    icon.classList.add('icon', style, pack);
+    icon.setAttribute('name', name);
+    icon.setAttribute('alt', icons[name].label);
+    preview.appendChild(icon);
+
+    previews.appendChild(preview);
 }
 
 module.exports = {

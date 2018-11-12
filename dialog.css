@@ -1,0 +1,45 @@
+form {
+  width: 390px;
+}
+
+#previews-wrapper {
+  height: 225px;
+  width: 100%;
+  padding-left: 8px;
+  overflow-y: scroll;
+}
+
+#previews-wrapper #previews {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+#previews-wrapper #previews .preview {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 75px;
+  width: 75px;
+}
+
+#previews-wrapper #previews .preview img {
+  height: 40px;
+  max-width: 40px;
+  opacity: 0.5;
+}
+
+#previews-wrapper #previews .preview:hover, #previews-wrapper #previews .preview.selected {
+  border: 2px solid #1492E6;
+  border-radius: 5px;
+}
+/*# sourceMappingURL=dialog.css.map */
