@@ -198,11 +198,18 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     const color = new Color('Black');
     selection.items = null;
     icons[name].svg[pack][style].forEach(part => {
+        let placingPoint;
         const graphicNode = (() => {
             switch(part.tag) {
-                case 'rect': return createRectangle(part.data.height, part.data.width, color, part.data.top_left_radius, part.data.top_right_radius, part.data.bottom_right_radius, part.data.bottom_left_radius);
-                case 'circle': return createCircle(part.data.radius, color);
-                case 'ellipse': return createEllipse(part.data.radius_x, part.data.radius_y, color);
+                case 'rect': 
+                    placingPoint = { x: part.data.x, y: part.data.y };
+                    return createRectangle(part.data.height, part.data.width, color, part.data.top_left_radius, part.data.top_right_radius, part.data.bottom_right_radius, part.data.bottom_left_radius);
+                case 'circle': 
+                    placingPoint = { x: part.data.center_x - part.data.radius, y: part.data.center_y - part.data.radius };
+                    return createCircle(part.data.radius, color);
+                case 'ellipse': 
+                    placingPoint = { x: part.data.center_x - part.data.radius_x, y: part.data.center_y - part.data.radius_y };
+                    return createEllipse(part.data.radius_x, part.data.radius_y, color);
                 case 'line': return createLine(part.data.start_x, part.data.start_y, part.data.end_x, part.data.end_y, color);
                 case 'polyline': return createPolyline(part.data, color);
                 case 'polygon': return createPolygon(part.data, color);
@@ -210,6 +217,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
             }
         })();
         selection.insertionParent.addChild(graphicNode);
+        if(placingPoint) graphicNode.placeInParentCoordinates({ x: 0, y: 0 }, placingPoint);
         selection.items = selection.items.concat([graphicNode]);
     });
     if(selection.items.length > 1) commands.group();
