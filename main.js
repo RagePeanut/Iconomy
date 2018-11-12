@@ -1,4 +1,10 @@
-const { Path, Color } = require('scenegraph');
+const { 
+    Rectangle,
+    Ellipse,
+    Line,
+    Path,
+    Color 
+} = require('scenegraph');
 const commands = require('commands');
 
 const icons = require('./icons/icons');
@@ -189,13 +195,22 @@ function addIcons(selectedIcons, selection) {
 }
 
 function addIcon(name, pack, style, label, leftOffset, padding, selection) {
+    const color = new Color('Black');
     selection.items = null;
     icons[name].svg[pack][style].forEach(part => {
-        if(part.tag === 'path') {
-            const path = createPath(part.data, 'Black');
-            selection.insertionParent.addChild(path);
-            selection.items = selection.items.concat([path]);
-        }
+        const graphicNode = (() => {
+            switch(part.tag) {
+                case 'rect': return createRectangle(part.data.height, part.data.width, color, part.data.top_left_radius, part.data.top_right_radius, part.data.bottom_right_radius, part.data.bottom_left_radius);
+                case 'circle': return createCircle(part.data.radius, color);
+                case 'ellipse': return createEllipse(part.data.radius_x, part.data.radius_y, color);
+                case 'line': return createLine(part.data.start_x, part.data.start_y, part.data.end_x, part.data.end_y, color);
+                case 'polyline': return createPolyline(part.data, color);
+                case 'polygon': return createPolygon(part.data, color);
+                default: return createPath(part.data, color);
+            }
+        })();
+        selection.insertionParent.addChild(graphicNode);
+        selection.items = selection.items.concat([graphicNode]);
     });
     if(selection.items.length > 1) commands.group();
     const icon = selection.items[0];
@@ -213,10 +228,53 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     return padding + width;
 }
 
+function createRectangle(height, width, color, cornerRadius) {
+    const rectangle = new Rectangle();
+    rectangle.height = height;
+    rectangle.width = width;
+    if(cornerRadius) {
+        rectangle.cornerRadii = { 
+            topLeft: cornerRadius, 
+            topRight: cornerRadius, 
+            bottomRight: cornerRadius, 
+            bottomLeft: cornerRadius
+        };
+    }
+    rectangle.fill = color;
+    return rectangle;
+}
+
+function createCircle(radius, color) {
+    return createEllipse(radius, radius, color);
+}
+
+function createEllipse(radiusX, radiusY, color) {
+    const ellipse = new Ellipse();
+    ellipse.radiusX = radiusX;
+    ellipse.radiusY = radiusY;
+    ellipse.fill = color;
+    return ellipse;
+}
+
+function createLine(startX, startY, endX, endY, color) {
+    const line = new Line();
+    line.setStartEnd(startX, startY, endX, endY);
+    line.fill = color;
+    return line;
+}
+
+function createPolyline(points, color) {
+    return createPath('M' + points + 'z', color);
+}
+
+function createPolygon(points, color) {
+    return createPath('M' + points + 'z', color);
+}
+
 function createPath(pathData, color) {
     const path = new Path();
     path.pathData = pathData;
-    path.fill = new Color(color);
+    path.fill = color;
     return path;
 }
 
