@@ -2,6 +2,7 @@ const icons = require('./icons/icons');
 
 let dialog;
 let previews;
+let selected;
 
 function insertIconsFunctionHandler(selection) {
     if(dialog == null) {
@@ -15,6 +16,9 @@ function insertIconsFunctionHandler(selection) {
         <div id="previews">Nothing to show yet.</div>
     </div>
     <footer>
+        <div id="selected-wrapper">
+            <div id="selected"></div>
+        </div>
         <button id="submit" type="submit" uxp-variant="cta">Add</button>
         <button id="cancel" uxp-variant="primary">Cancel</button>
     </footer>
@@ -31,7 +35,32 @@ function insertIconsFunctionHandler(selection) {
         const submitButton = document.getElementById('submit');
         submitButton.addEventListener('click', onsubmit);
 
+        selected = document.getElementById('selected');
+
         previews = document.getElementById('previews');
+        previews.addEventListener('click', event => {
+            let node;
+            if(event.target.classList.contains('preview')) node = event.target;
+            else if(event.target.classList.contains('icon')) node = event.target.parentNode;
+            else return;
+            const name = node.getAttribute('name');
+            const style = node.classList.item(1);
+            const pack = node.classList.item(2);
+            const icon = node.childNodes.item(0);
+            
+            const selectedPreview = document.createElement('div');
+            selectedPreview.classList.add('selected-preview', style, pack);
+            selectedPreview.setAttribute('name', name);
+
+            const selectedIcon = document.createElement('img');
+            selectedIcon.src = icon.src;
+            selectedIcon.classList.add('selected-icon', style, pack);
+            selectedIcon.setAttribute('name', name);
+            selectedIcon.setAttribute('alt', icon.getAttribute('alt'));
+            selectedPreview.appendChild(selectedIcon);
+
+            selected.appendChild(selectedPreview);
+        });
     }
     return dialog.showModal()
                  .then(res => console.log(res));

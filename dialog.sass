@@ -1,25 +1,46 @@
 form
     width: 390px
+    footer
+        position: relative
 
 #previews-wrapper
     height: 225px
     width: 100%
     padding-left: 8px
     overflow-y: scroll
-    #previews
+    #previews .preview
         display: flex
-        flex-wrap: wrap
-        width: 100%
-        .preview
-            display: flex
-            justify-content: center
-            align-items: center
-            height: 75px
-            width: 75px
-            img
-                height: 40px
-                max-width: 40px
-                opacity: 0.5
-            &:hover, &.selected
-                border: 2px solid #1492E6
-                border-radius: 5px
+        justify-content: center
+        align-items: center
+        height: 75px
+        width: 75px
+        img
+            height: 40px
+            max-width: 40px
+            opacity: 0.5
+        &:hover
+            border: 2px solid #1492E6
+            border-radius: 5px
+
+#selected-wrapper
+    position: absolute
+    top: 8px
+    left: 8px
+    height: 64px
+    width: 215px
+    overflow-y: scroll
+    #selected .selected-preview
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 32px
+        width: 32px
+        img
+            height: 20px
+            max-width: 20px
+            opacity: 0.5
+
+#selected, #previews
+    display: flex
+    flex-wrap: wrap
+    width: 100%
