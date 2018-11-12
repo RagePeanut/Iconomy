@@ -7,6 +7,7 @@ let dialog;
 let previews;
 let selected;
 let styleFilter;
+let packFilter;
 let heightField;
 let widthField;
 
@@ -18,14 +19,23 @@ function insertIconsFunctionHandler(selection) {
 <form method="dialog">
     <h1>Fast Icons</h1>
     <input id="search" type="text" placeholder="Search an icon...">
-    <div>
-        <h2>Pack</h2>
-        <select id="style">
-            <option value="all">All</option>
-            <option value="regular">Regular</option>
-            <option value="solid">Solid</option>
-            <option value="brands">Brands</option>
-        </select>
+    <div id="filters" class="row">
+        <div>
+            <h2>Pack</h2>
+            <select id="pack">
+                <option value="all">All</option>
+                <option value="fontawesome">Font Awesome</option>
+            </select>
+        </div>
+        <div>
+            <h2>Style</h2>
+            <select id="style">
+                <option value="all">All</option>
+                <option value="regular">Regular</option>
+                <option value="solid">Solid</option>
+                <option value="brands">Brands</option>
+            </select>
+        </div>
     </div>
     <div id="size" class="row">
         <div>
@@ -63,6 +73,12 @@ function insertIconsFunctionHandler(selection) {
         styleFilter = document.getElementById('style');
         styleFilter.value = 'all';
         styleFilter.addEventListener('change', () => {
+            updatePreviews(searchBar.value);
+        });
+
+        packFilter = document.getElementById('pack');
+        packFilter.value = 'all';
+        packFilter.addEventListener('change', () => {
             updatePreviews(searchBar.value);
         });
 
@@ -120,6 +136,7 @@ function onsubmit(selection) {
     document.getElementById('search').value = '';
     previews.innerHTML = 'Nothing to show yet.';
     styleFilter.value = 'all';
+    packFilter.value = 'all';
     dialog.close('Submitted');
 }
 
@@ -130,9 +147,11 @@ function updatePreviews(search) {
         const currentIcon = icons[name];
         if(regex.test(name) || currentIcon.search.some(term => regex.test(term))) {
             currentIcon.packs.forEach(async pack => {
-                currentIcon.svg[pack].styles.forEach(async style => {
-                    if(['all', style].includes(styleFilter.value)) addPreview(name, pack, style);
-                });
+                if(['all', pack].includes(packFilter.value)) {
+                    currentIcon.svg[pack].styles.forEach(async style => {
+                        if(['all', style].includes(styleFilter.value)) addPreview(name, pack, style);
+                    });
+                }
             });
         }
     });
