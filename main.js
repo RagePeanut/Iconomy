@@ -203,7 +203,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
             switch(part.tag) {
                 case 'rect': 
                     placingPoint = { x: part.data.x, y: part.data.y };
-                    return createRectangle(part.data.height, part.data.width, color, part.data.top_left_radius, part.data.top_right_radius, part.data.bottom_right_radius, part.data.bottom_left_radius);
+                    return createRectangle(part.data.height, part.data.width, color, part.data.corner_radius);
                 case 'circle': 
                     placingPoint = { x: part.data.center_x - part.data.radius, y: part.data.center_y - part.data.radius };
                     return createCircle(part.data.radius, color);
@@ -218,6 +218,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         })();
         selection.insertionParent.addChild(graphicNode);
         if(placingPoint) graphicNode.placeInParentCoordinates({ x: 0, y: 0 }, placingPoint);
+        part.transforms.forEach(transform => transformNode(transform.type, graphicNode, transform.data));
         selection.items = selection.items.concat([graphicNode]);
     });
     const multipleParts = selection.items.length > 1;
@@ -297,6 +298,20 @@ function createPath(pathData, color) {
     path.pathData = pathData;
     path.fill = color;
     return path;
+}
+
+function transformNode(type, node, data) {
+    switch(type) {
+        case 'translate':
+            node.translation = data;
+            break;
+        case 'rotate':
+            if(!data.hasOwnProperty('center_x')) {
+                data.center_x = node.localCenterPoint.x;
+                data.center_y = node.localCenterPoint.y;
+            }
+            node.rotateAround(data.radius, { x: data.center_x, y: data.center_y });
+    }
 }
 
 module.exports = {
