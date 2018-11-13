@@ -220,10 +220,9 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         if(placingPoint) graphicNode.placeInParentCoordinates({ x: 0, y: 0 }, placingPoint);
         selection.items = selection.items.concat([graphicNode]);
     });
-    if(selection.items.length > 1) commands.group();
+    const multipleParts = selection.items.length > 1;
+    if(multipleParts) commands.group();
     const icon = selection.items[0];
-    icon.name = label;
-    icon.moveInParentCoordinates(leftOffset + padding, 0);
     const localBounds = icon.localBounds;
     let height = (!isNaN(heightField.value) && heightField.value) || 40;
     let width = height * localBounds.width / localBounds.height;
@@ -232,7 +231,21 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         width = widthField.value;
         height = width * localBounds.height / localBounds.width;
     }
-    icon.resize(width, height);
+    if(!multipleParts) icon.resize(width, height);
+    else {
+        const ratio = height / localBounds.height;
+        const iconTopLeft = icon.topLeftInParent;
+        commands.ungroup();
+        selection.items.forEach(item => {
+            const x = iconTopLeft.x + (item.topLeftInParent.x - iconTopLeft.x) * (ratio - 1);
+            const y = iconTopLeft.y + (item.topLeftInParent.y - iconTopLeft.y) * (ratio - 1);
+            item.resize(item.localBounds.width * ratio, item.localBounds.height * ratio);
+            item.moveInParentCoordinates(x, y);
+        });
+        commands.group();
+    }
+    selection.items[0].name = label;
+    selection.items[0].moveInParentCoordinates(leftOffset + padding, 0);
     return padding + width;
 }
 
