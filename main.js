@@ -9,6 +9,8 @@ const commands = require('commands');
 
 const icons = require('./icons/icons');
 
+const SIZE = 40;
+
 let dialog;
 let previews;
 let selected;
@@ -47,11 +49,11 @@ function insertIconsFunctionHandler(selection) {
     <div id="size" class="row">
         <div>
             <h2>Height</h2>
-            <input id="height" type="number" placeholder="40">
+            <input id="height" type="number" placeholder="${ SIZE }">
         </div>
         <div>
             <h2>Max Width</h2>
-            <input id="width" type="number" placeholder="40">
+            <input id="width" type="number" placeholder="${ SIZE }">
         </div>
     </div>
     <div id="previews-wrapper">
@@ -69,7 +71,7 @@ function insertIconsFunctionHandler(selection) {
         document.body.appendChild(dialog);
 
         const searchBar = document.getElementById('search');
-        searchBar.addEventListener('keyup', () => updatePreviews(searchBar.value));
+        searchBar.addEventListener('input', () => updatePreviews(searchBar.value));
 
         const cancelButton = document.getElementById('cancel');
         cancelButton.addEventListener('click', oncancel);
@@ -91,8 +93,8 @@ function insertIconsFunctionHandler(selection) {
 
         heightField = document.getElementById('height');
         widthField = document.getElementById('width');
-        heightField.addEventListener('keyup', () => {
-            widthField.setAttribute('placeholder', heightField.value);
+        heightField.addEventListener('input', () => {
+            widthField.setAttribute('placeholder', parseFloat(heightField.value) || SIZE);
         });
 
         selected = document.getElementById('selected');
@@ -226,11 +228,11 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     if(multipleParts) commands.group();
     const icon = selection.items[0];
     const localBounds = icon.localBounds;
-    let height = (!isNaN(heightField.value) && heightField.value) || 40;
+    let height = (!isNaN(heightField.value) && parseFloat(heightField.value)) || SIZE;
     let width = height * localBounds.width / localBounds.height;
-    if(!widthField.value || isNaN(widthField.value)) widthField.value = height;
-    if(width > widthField.value) {
-        width = widthField.value;
+    const widthFieldValue = (!widthField.value || isNaN(widthField.value)) ? height : parseFloat(widthField.value);
+    if(width > widthFieldValue) {
+        width = widthFieldValue;
         height = width * localBounds.height / localBounds.width;
     }
     if(!multipleParts) icon.resize(width, height);
