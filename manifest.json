@@ -5,7 +5,7 @@
         "app": "XD",
         "minVersion": "13.0.0"
     },
-    "version": "0.0.7",
+    "version": "0.0.8",
     "uiEntryPoints": [
         {
             "type": "menu",

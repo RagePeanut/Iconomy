@@ -222,6 +222,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         selection.insertionParent.addChild(graphicNode);
         if(placingPoint) graphicNode.placeInParentCoordinates({ x: 0, y: 0 }, placingPoint);
         part.transforms.forEach(transform => transformNode(transform.type, graphicNode, transform.data));
+        if(part.stroke) setStroke(graphicNode, part.stroke, color);
         selection.items = selection.items.concat([graphicNode]);
     });
     const multipleParts = selection.items.length > 1;
@@ -301,6 +302,17 @@ function createPath(pathData, color) {
     path.pathData = pathData;
     path.fill = color;
     return path;
+}
+
+function setStroke(node, stroke, color) {
+    node.strokeEnabled = true;
+    node.stroke = color;
+    node.strokeWidth = stroke.width;
+    node.strokeEndCaps = 'STROKE_CAP_' + stroke.linecap.toUpperCase();
+    node.strokeJoins = 'STROKE_JOIN_' + stroke.linejoin.toUpperCase();
+    node.strokeMiterLimit = stroke.miterlimit;
+    node.strokeDashArray = stroke.dasharray;
+    node.strokeDashOffset = stroke.dashoffset;
 }
 
 function transformNode(type, node, data) {
