@@ -206,22 +206,23 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
             switch(part.tag) {
                 case 'rect': 
                     placingPoint = { x: part.data.x, y: part.data.y };
-                    return createRectangle(part.data.height, part.data.width, color, part.data.corner_radius);
+                    return createRectangle(part.data.height, part.data.width, part.data.corner_radius);
                 case 'circle': 
                     placingPoint = { x: part.data.center_x - part.data.radius, y: part.data.center_y - part.data.radius };
-                    return createCircle(part.data.radius, color);
+                    return createCircle(part.data.radius);
                 case 'ellipse': 
                     placingPoint = { x: part.data.center_x - part.data.radius_x, y: part.data.center_y - part.data.radius_y };
-                    return createEllipse(part.data.radius_x, part.data.radius_y, color);
-                case 'line': return createLine(part.data.start_x, part.data.start_y, part.data.end_x, part.data.end_y, color);
-                case 'polyline': return createPolyline(part.data, color);
-                case 'polygon': return createPolygon(part.data, color);
-                default: return createPath(part.data, color);
+                    return createEllipse(part.data.radius_x, part.data.radius_y);
+                case 'line': return createLine(part.data.start_x, part.data.start_y, part.data.end_x, part.data.end_y);
+                case 'polyline': return createPolyline(part.data);
+                case 'polygon': return createPolygon(part.data);
+                default: return createPath(part.data);
             }
         })();
         selection.insertionParent.addChild(graphicNode);
         if(placingPoint) graphicNode.placeInParentCoordinates({ x: 0, y: 0 }, placingPoint);
         part.transforms.forEach(transform => transformNode(transform.type, graphicNode, transform.data));
+        setFill(graphicNode, part.fill, color);
         if(part.stroke) setStroke(graphicNode, part.stroke, color);
         selection.items = selection.items.concat([graphicNode]);
     });
@@ -254,7 +255,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     return padding + width;
 }
 
-function createRectangle(height, width, color, cornerRadius) {
+function createRectangle(height, width, cornerRadius) {
     const rectangle = new Rectangle();
     rectangle.height = height;
     rectangle.width = width;
@@ -266,42 +267,43 @@ function createRectangle(height, width, color, cornerRadius) {
             bottomLeft: cornerRadius
         };
     }
-    rectangle.fill = color;
     return rectangle;
 }
 
-function createCircle(radius, color) {
-    return createEllipse(radius, radius, color);
+function createCircle(radius) {
+    return createEllipse(radius, radius);
 }
 
-function createEllipse(radiusX, radiusY, color) {
+function createEllipse(radiusX, radiusY) {
     const ellipse = new Ellipse();
     ellipse.radiusX = radiusX;
     ellipse.radiusY = radiusY;
-    ellipse.fill = color;
     return ellipse;
 }
 
-function createLine(startX, startY, endX, endY, color) {
+function createLine(startX, startY, endX, endY) {
     const line = new Line();
     line.setStartEnd(startX, startY, endX, endY);
-    line.fill = color;
     return line;
 }
 
-function createPolyline(points, color) {
-    return createPath('M' + points + 'z', color);
+function createPolyline(points) {
+    return createPath('M' + points);
 }
 
-function createPolygon(points, color) {
-    return createPath('M' + points + 'z', color);
+function createPolygon(points) {
+    return createPath('M' + points);
 }
 
-function createPath(pathData, color) {
+function createPath(pathData) {
     const path = new Path();
     path.pathData = pathData;
-    path.fill = color;
     return path;
+}
+
+function setFill(node, fillEnabled, color) {
+    node.fillEnabled = fillEnabled;
+    node.fill = color;
 }
 
 function setStroke(node, stroke, color) {
