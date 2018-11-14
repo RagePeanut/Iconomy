@@ -244,6 +244,8 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         const iconTopLeft = icon.topLeftInParent;
         commands.ungroup();
         selection.items.forEach(item => {
+            if(item.strokeEnabled) item.strokeWidth = item.strokeWidth * ratio;
+            if(item.hasRoundedCorners) item.setAllCornerRadii(item.cornerRadii.topLeft * ratio);
             const x = iconTopLeft.x + (item.topLeftInParent.x - iconTopLeft.x) * (ratio - 1);
             const y = iconTopLeft.y + (item.topLeftInParent.y - iconTopLeft.y) * (ratio - 1);
             item.resize(item.localBounds.width * ratio, item.localBounds.height * ratio);
@@ -260,14 +262,7 @@ function createRectangle(height, width, cornerRadius) {
     const rectangle = new Rectangle();
     rectangle.height = height;
     rectangle.width = width;
-    if(cornerRadius) {
-        rectangle.cornerRadii = { 
-            topLeft: cornerRadius, 
-            topRight: cornerRadius, 
-            bottomRight: cornerRadius, 
-            bottomLeft: cornerRadius
-        };
-    }
+    if(cornerRadius) rectangle.setAllCornerRadii(cornerRadius);
     return rectangle;
 }
 
