@@ -1,4 +1,5 @@
 const { 
+    GraphicNode,
     Rectangle,
     Ellipse,
     Line,
@@ -222,7 +223,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         selection.insertionParent.addChild(graphicNode);
         if(placingPoint) graphicNode.placeInParentCoordinates({ x: 0, y: 0 }, placingPoint);
         part.transforms.forEach(transform => transformNode(transform.type, graphicNode, transform.data));
-        setFill(graphicNode, part.fill, color);
+        setFill(graphicNode, part.tag, part.fill, color);
         if(part.stroke) setStroke(graphicNode, part.stroke, color);
         selection.items = selection.items.concat([graphicNode]);
     });
@@ -301,17 +302,19 @@ function createPath(pathData) {
     return path;
 }
 
-function setFill(node, fillEnabled, color) {
-    node.fillEnabled = fillEnabled;
-    node.fill = color;
+function setFill(node, type, fillEnabled, color) {
+    if(type !== 'line') {
+        node.fillEnabled = fillEnabled;
+        node.fill = color;
+    }
 }
 
 function setStroke(node, stroke, color) {
     node.strokeEnabled = true;
     node.stroke = color;
     node.strokeWidth = stroke.width;
-    node.strokeEndCaps = 'STROKE_CAP_' + stroke.linecap.toUpperCase();
-    node.strokeJoins = 'STROKE_JOIN_' + stroke.linejoin.toUpperCase();
+    node.strokeEndCaps = GraphicNode['STROKE_CAP_' + stroke.linecap.toUpperCase()];
+    node.strokeJoins = GraphicNode['STROKE_JOIN_' + stroke.linejoin.toUpperCase()];
     node.strokeMiterLimit = stroke.miterlimit;
     node.strokeDashArray = stroke.dasharray;
     node.strokeDashOffset = stroke.dashoffset;
