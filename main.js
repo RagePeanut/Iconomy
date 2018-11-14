@@ -33,7 +33,7 @@ function insertIconsFunctionHandler(selection) {
             <h2>Pack</h2>
             <select id="pack">
                 <option value="all">All</option>
-                <option value="boxicons">BoxIcons</option>
+                <option value="boxicons">Boxicons</option>
                 <option value="feather">Feather</option>
                 <option value="fontawesome">Font Awesome</option>
             </select>
