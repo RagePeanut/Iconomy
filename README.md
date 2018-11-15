@@ -1,4 +1,4 @@
-# Fast Icons (0.1.0)
+# Fast Icons (0.1.1)
 **Fast Icons** is a plugin for **Adobe XD** that aims to help you with finding the right icons for your artboards by letting you search through an ever growing library of icons coming from hand-picked free icon packs.
 
 ## Supported packs
@@ -6,7 +6,8 @@ Pack | Version | Regular | Solid | Brands
 -|:-:|:-:|:-:|:-:
 [Boxicons](https://boxicons.com/) | 1.7.1 | 472 | 294 | 35
 [Feather](https://feathericons.com/) | 4.8.0 | 256 | 0 | 11
-[Font Awesome](https://fontawesome.com/) | 5.5.0 | 152 | 869 | 391
+[Font Awesome](https://fontawesome.com/icons?d=gallery&m=free) | 5.5.0 | 152 | 869 | 391
+[Linearicons](https://linearicons.com/free) | 1.0.0 | 170 | 0 | 0
 
 ## Install
 
@@ -47,10 +48,10 @@ The *Max Width* field lets you specify the maximum width you want your icon to h
 Selecting an icon is as simple as clicking on it in the least of selectable icons that get updated on every input. Once clicked, the icon will appear in the list of selected icons in the bottom left corner of the window.
 ### 7. The selected icons
 The selected icons can be unselected at any time. Unselecting an icon is as simple as clicking on it in the list of selected icons that can be found in the bottom left corner of the **Fast Icons** window.
-### 8. The add button
-The *Add* button will add the selected icons to your artboard. They should be presented in a row nicely spaced but it is not guaranteed as some bugs can happen making some of them appear one on top of another. Clicking on the *Add* button will set all the fields back to their default values except for *Height* and *Max Width* which will stay at the same values as before.
-### 9. The cancel button
+### 8. The cancel button
 The *Cancel* button will close the **Fast Icons** window without affecting your artboard whatsoever. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins). A *Clear* button is to be expected soon.
+### 9. The add button
+The *Add* button will add the selected icons to your artboard. They should be presented in a row nicely spaced but it is not guaranteed as a bug can happen from time to time making some of them appear one on top of another. Clicking on the *Add* button will set all the fields back to their default values except for *Height* and *Max Width* which will stay at the same values as before.
 
 ## Known issues
 * **The search bar can't always be set back to an empty string.** A workaround until this gets fixed is to type a space in the search bar field instead of an empty string since spaces are ignored when filtering icons.
