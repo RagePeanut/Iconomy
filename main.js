@@ -96,7 +96,8 @@ function insertIconsFunctionHandler(selection) {
         heightField = document.getElementById('height');
         widthField = document.getElementById('width');
         heightField.addEventListener('input', () => {
-            widthField.setAttribute('placeholder', parseFloat(heightField.value) || SIZE);
+            const height = parseFloat(heightField.value);
+            widthField.setAttribute('placeholder', height && height.toString() || SIZE);
         });
 
         selected = document.getElementById('selected');
