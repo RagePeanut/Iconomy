@@ -28,7 +28,7 @@ Select all the files inside the `fast-icons` folder (don't select the folder its
 Double-click on `fast-icons.xdx`, this should execute **Adobe XD** if it isn't already running. The installation doesn't usually happen immediately, wait a few minutes and you should see a pop-up asking you if you want to install the **Fast Icons** plugin. Click *Install* and voilà ! **Fast Icons** should now be visible in the plugins menu.
 
 ## How to use
-To open the **Fast Icons** window, you have two options. You can either use the shortcut assigned to your system (`CTRL+SHIFT+W` for **Windows** and `CMD+SHIFT+W` for **Mac**) or click on the burger menu item then on *Plugins* and then on *Insert Icons*. Once the windo is opened you will be presented with a few fields, let's explore them one after another.
+To open the **Fast Icons** window, you have two options. You can either use the shortcut assigned to your system (`CTRL+SHIFT+W` for **Windows** and `CMD+SHIFT+W` for **Mac**) or click on the burger menu item then on *Plugins* and then on *Insert Icons*. Once the window is opened you will be presented with a few fields, let's explore them one after another.
 <p align="center">
   <img src="https://cdn.steemitimages.com/DQmf1auhCBi8kMfNFvXx99WBQnei7rH64tmwDo2sREiFUQF/ui.png">
 </p>
