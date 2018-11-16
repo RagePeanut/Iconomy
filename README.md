@@ -1,10 +1,10 @@
-# Fast Icons (0.1.1)
+# Fast Icons (0.1.2)
 **Fast Icons** is a plugin for **Adobe XD** that aims to help you with finding the right icons for your artboards by letting you search through an ever growing library of icons coming from hand-picked free icon packs.
 
 ## Supported packs
 Pack | Version | Regular | Solid | Brands
 -|:-:|:-:|:-:|:-:
-[Boxicons](https://boxicons.com/) | 1.7.1 | 472 | 294 | 35
+[Boxicons](https://boxicons.com/) | 1.8.0 | 480 | 289 | 35
 [Feather](https://feathericons.com/) | 4.8.0 | 256 | 0 | 11
 [Font Awesome](https://fontawesome.com/icons?d=gallery&m=free) | 5.5.0 | 152 | 869 | 391
 [Linearicons](https://linearicons.com/free) | 1.0.0 | 170 | 0 | 0
