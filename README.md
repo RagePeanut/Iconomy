@@ -1,4 +1,4 @@
-# Fast Icons (0.1.3)
+# Fast Icons (0.1.4)
 **Fast Icons** is a plugin for **Adobe XD** that aims to help you with finding the right icons for your artboards by letting you search through an ever growing library of icons coming from hand-picked free icon packs.
 
 ## Supported packs
@@ -32,7 +32,7 @@ Double-click on `fast-icons.xdx`, this should execute **Adobe XD** if it isn't a
 ## How to use
 To open the **Fast Icons** window, you have two options. You can either use the shortcut assigned to your system (`CTRL+SHIFT+W` for **Windows** and `CMD+SHIFT+W` for **Mac**) or click on the burger menu item then on *Plugins* and then on *Insert Icons*. Once the window is opened you will be presented with a few fields, let's explore them one after another.
 <p align="center">
-  <img src="https://cdn.steemitimages.com/DQmf1auhCBi8kMfNFvXx99WBQnei7rH64tmwDo2sREiFUQF/ui.png">
+  <img src="https://cdn.steemitimages.com/DQmbLvKH52NHLQA5XMHBqbB1q1Rn6RtttD3XD1kzBegk189/ui.png">
 </p>
 
 ### 1. The search bar
@@ -49,9 +49,11 @@ The *Max Width* field lets you specify the maximum width you want your icon to h
 Selecting an icon is as simple as clicking on it in the least of selectable icons that get updated on every input. Once clicked, the icon will appear in the list of selected icons in the bottom left corner of the window.
 ### 7. The selected icons
 The selected icons can be unselected at any time. Unselecting an icon is as simple as clicking on it in the list of selected icons that can be found in the bottom left corner of the **Fast Icons** window.
-### 8. The cancel button
-The *Cancel* button will close the **Fast Icons** window without affecting your artboard whatsoever. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins). A *Clear* button is to be expected soon.
-### 9. The add button
+### 8. The clear button
+The *Clear* button will remove all the user inputs from the **Fast Icons** window as well as clear the selectable and selected icons. 
+### 9. The cancel button
+The *Cancel* button will close the **Fast Icons** window without affecting your artboard whatsoever. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins).
+### 10. The add button
 The *Add* button will add the selected icons to your artboard. They should be presented in a row nicely spaced but it is not guaranteed as a bug can happen from time to time making some of them appear one on top of another. Clicking on the *Add* button will set all the fields back to their default values except for *Height* and *Max Width* which will stay at the same values as before.
 
 ## Known issues

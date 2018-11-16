@@ -11,10 +11,12 @@ const commands = require('commands');
 const icons = require('./icons/icons');
 
 const SIZE = 40;
+const NOTHING_TO_SHOW = 'Nothing to show yet.';
 
 let dialog;
 let previews;
 let selected;
+let searchBar;
 let styleFilter;
 let packFilter;
 let heightField;
@@ -61,20 +63,21 @@ function insertIconsFunctionHandler(selection) {
         </div>
     </div>
     <div id="previews-wrapper">
-        <div id="previews">Nothing to show yet.</div>
+        <div id="previews">${ NOTHING_TO_SHOW }</div>
     </div>
     <footer>
         <div id="selected-wrapper">
             <div id="selected"></div>
         </div>
         <button id="submit" type="submit" uxp-variant="cta">Add</button>
+        <button id="clear" uxp-variant="primary">Clear</button>
         <button id="cancel" uxp-variant="primary">Cancel</button>
     </footer>
 </form>
         `;
         document.body.appendChild(dialog);
 
-        const searchBar = document.getElementById('search');
+        searchBar = document.getElementById('search');
         searchBar.addEventListener('input', () => updatePreviews(searchBar.value));
 
         const cancelButton = document.getElementById('cancel');
@@ -82,6 +85,9 @@ function insertIconsFunctionHandler(selection) {
 
         const submitButton = document.getElementById('submit');
         submitButton.addEventListener('click', () => onsubmit(selection));
+
+        const clearButton = document.getElementById('clear');
+        clearButton.addEventListener('click', () => onclear(false));
 
         styleFilter = document.getElementById('style');
         styleFilter.value = 'all';
@@ -144,13 +150,22 @@ function oncancel() {
     dialog.close('Cancelled');
 }
 
-function onsubmit(selection) {
-    addIcons(Array.from(selected.childNodes), selection);
+function onclear(calledFromSubmit) {
     selected.innerHTML = '';
-    document.getElementById('search').value = '';
-    previews.innerHTML = 'Nothing to show yet.';
+    searchBar.value = '';
+    previews.innerHTML = NOTHING_TO_SHOW;
     styleFilter.value = 'all';
     packFilter.value = 'all';
+    if(!calledFromSubmit) {
+        heightField.value = '';
+        widthField.value = '';
+        widthField.placeholder = SIZE;
+    }
+}
+
+function onsubmit(selection) {
+    addIcons(Array.from(selected.childNodes), selection);
+    onclear(true);
     dialog.close('Submitted');
 }
 
