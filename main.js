@@ -22,6 +22,10 @@ let packFilter;
 let heightField;
 let widthField;
 
+/**
+ * Handles the 'Insert Icons' command
+ * @param {any} selection Data about what's currently selected in Adobe XD
+ */
 function insertIconsFunctionHandler(selection) {
     if(dialog == null) {
         dialog = document.createElement('dialog');
@@ -120,6 +124,7 @@ function insertIconsFunctionHandler(selection) {
         previews = document.getElementById('previews');
         previews.addEventListener('click', event => {
             let node;
+            // Setting the node to the div containing the icon
             if(event.target.classList.contains('preview')) node = event.target;
             else if(event.target.classList.contains('icon')) node = event.target.parentNode;
             else return;
@@ -146,10 +151,15 @@ function insertIconsFunctionHandler(selection) {
                  .then(res => console.log(res));
 }
 
+/** Closes the plugin's window */
 function oncancel() {
     dialog.close('Cancelled');
 }
 
+/**
+ * Resets all the fields to their default values
+ * @param {boolean} calledFromSubmit Whether or not the function has been called from onsubmit()
+ */
 function onclear(calledFromSubmit) {
     selected.innerHTML = '';
     searchBar.value = '';
@@ -163,12 +173,17 @@ function onclear(calledFromSubmit) {
     }
 }
 
+/** Adds the icons to the artboard and resets most of the fields to their default values*/
 function onsubmit(selection) {
     addIcons(Array.from(selected.childNodes), selection);
     onclear(true);
     dialog.close('Submitted');
 }
 
+/**
+ * Updates the previews based on user inputs
+ * @param {string} search The current value of the search box
+ */
 function updatePreviews(search) {
     const regex = new RegExp(search.replace(/[ -]+/g, ''), 'i');
     previews.innerHTML = '';
@@ -186,6 +201,12 @@ function updatePreviews(search) {
     });
 }
 
+/**
+ * Adds an icon preview to the previews div
+ * @param {string} name The name of the icon
+ * @param {string} pack The pack from which the icon comes
+ * @param {string} style The style of the icon
+ */
 function addPreview(name, pack, style) {
     const preview = document.createElement('div');
     preview.classList.add('preview', style, pack);
@@ -201,6 +222,11 @@ function addPreview(name, pack, style) {
     previews.appendChild(preview);
 }
 
+/**
+ * Adds selected icons to the artboard
+ * @param {any[]} selectedIcons The selected icons' nodes
+ * @param {any} selection Data about what's currently selected in Adobe XD
+ */
 function addIcons(selectedIcons, selection) {
     const selectedItems = [];
     let padding = 0, leftOffset = 0;
@@ -217,6 +243,17 @@ function addIcons(selectedIcons, selection) {
     if(selection.items.length > 1) commands.alignVerticalCenter();
 }
 
+/**
+ * Adds an icon to the artboard
+ * @param {string} name The name of the icon
+ * @param {string} pack The name of the pack the icon comes from
+ * @param {string} style The style of the icon
+ * @param {string} label The name the icon will have in Adobe XD
+ * @param {number} leftOffset The left offset of the icon (compared to the selection's x coordinate) 
+ * @param {number} padding The padding to add on the left of the icon to separate it from the previous icon 
+ * @param {any} selection Data about what's currently selected in Adobe XD
+ * @returns {number} The left offset for the next icon
+ */
 function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     const color = new Color('Black');
     selection.items = null;
@@ -262,6 +299,7 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
         const ratio = height / localBounds.height;
         const iconTopLeft = icon.topLeftInParent;
         commands.ungroup();
+        // Rescaling by resizing each item individually (resizing a group doesn't keep consistent distances between items)
         selection.items.forEach(item => {
             if(item.strokeEnabled) item.strokeWidth = item.strokeWidth * ratio;
             if(item.hasRoundedCorners) item.setAllCornerRadii(item.cornerRadii.topLeft * ratio);
@@ -277,6 +315,13 @@ function addIcon(name, pack, style, label, leftOffset, padding, selection) {
     return padding + width;
 }
 
+/**
+ * Creates a rectangle
+ * @param {number} height The height of the rectangle
+ * @param {number} width The width of the rectangle
+ * @param {number} [cornerRadius] The radius of the rectangle's corners
+ * @returns {Rectangle} The created rectangle
+ */
 function createRectangle(height, width, cornerRadius) {
     const rectangle = new Rectangle();
     rectangle.height = height;
@@ -285,10 +330,21 @@ function createRectangle(height, width, cornerRadius) {
     return rectangle;
 }
 
+/**
+ * Creates a circle
+ * @param {number} radius The radius of the circle
+ * @returns {Ellipse} The created circle
+ */
 function createCircle(radius) {
     return createEllipse(radius, radius);
 }
 
+/**
+ * Create an ellipse
+ * @param {number} radiusX The x radius of the ellipse
+ * @param {number} radiusY The y radius of the ellipse
+ * @returns {Ellipse} The created ellipse
+ */
 function createEllipse(radiusX, radiusY) {
     const ellipse = new Ellipse();
     ellipse.radiusX = radiusX;
@@ -296,26 +352,56 @@ function createEllipse(radiusX, radiusY) {
     return ellipse;
 }
 
+/**
+ * Creates a line
+ * @param {number} startX The starting x coordinate
+ * @param {number} startY The starting y coordinate
+ * @param {number} endX The ending x coordinate
+ * @param {number} endY The ending y coordinate
+ * @returns {Line} The created line
+ */
 function createLine(startX, startY, endX, endY) {
     const line = new Line();
     line.setStartEnd(startX, startY, endX, endY);
     return line;
 }
 
+/**
+ * Creates a polyline
+ * @param {string} points The points of the polyline
+ * @returns {Path} The created polyline
+ */
 function createPolyline(points) {
     return createPath('M' + points);
 }
 
+/**
+ * Creates a polygon
+ * @param {string} points The points of the polygon
+ * @returns {Path} The created polygon
+ */
 function createPolygon(points) {
     return createPath('M' + points);
 }
 
+/**
+ * Creates a path
+ * @param {string} pathData The path's data
+ * @returns {Path} The created path
+ */
 function createPath(pathData) {
     const path = new Path();
     path.pathData = pathData;
     return path;
 }
 
+/**
+ * Sets the fill of a node
+ * @param {any} node The node to set the fill for
+ * @param {string} type The type of the node
+ * @param {boolean} fillEnabled Whether or not the node should have a fill
+ * @param {Color} color The color of the fill
+ */
 function setFill(node, type, fillEnabled, color) {
     if(type !== 'line') {
         node.fillEnabled = fillEnabled;
@@ -323,6 +409,12 @@ function setFill(node, type, fillEnabled, color) {
     }
 }
 
+/**
+ * Sets the stroke of a node
+ * @param {any} node The node to set the stroke for
+ * @param {{width: number, linecap: string, linejoin: string, miterlimit: number, dasharray: number[], dashoffset: number}} stroke Data about the stroke
+ * @param {Color} color The color of the stroke
+ */
 function setStroke(node, stroke, color) {
     node.strokeEnabled = true;
     node.stroke = color;
@@ -334,6 +426,12 @@ function setStroke(node, stroke, color) {
     node.strokeDashOffset = stroke.dashoffset;
 }
 
+/**
+ * Applies a transformation to a node
+ * @param {string} type The type of transformation
+ * @param {any} node The node to apply the transformation to
+ * @param {{x: number, y: number} | {center_x: number, center_y: number, radius: number}} data Data about the transformation
+ */
 function transformNode(type, node, data) {
     switch(type) {
         case 'translate':
