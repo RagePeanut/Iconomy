@@ -1,4 +1,4 @@
-# Fast Icons (0.1.4)
+# Fast Icons (0.1.5)
 **Fast Icons** is a plugin for **Adobe XD** that aims to help you with finding the right icons for your artboards by letting you search through an ever growing library of icons coming from hand-picked free icon packs.
 
 ## Supported packs

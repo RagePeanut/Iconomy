@@ -21,6 +21,7 @@ let styleFilter;
 let packFilter;
 let heightField;
 let widthField;
+let previousSearchRegex;
 
 /**
  * Handles the 'Insert Icons' command
@@ -82,7 +83,7 @@ function insertIconsFunctionHandler(selection) {
         document.body.appendChild(dialog);
 
         searchBar = document.getElementById('search');
-        searchBar.addEventListener('input', () => updatePreviews(searchBar.value));
+        searchBar.addEventListener('input', () => updatePreviews(true));
 
         const cancelButton = document.getElementById('cancel');
         cancelButton.addEventListener('click', oncancel);
@@ -95,15 +96,11 @@ function insertIconsFunctionHandler(selection) {
 
         styleFilter = document.getElementById('style');
         styleFilter.value = 'all';
-        styleFilter.addEventListener('change', () => {
-            updatePreviews(searchBar.value);
-        });
+        styleFilter.addEventListener('change', () => updatePreviews(false));
 
         packFilter = document.getElementById('pack');
         packFilter.value = 'all';
-        packFilter.addEventListener('change', () => {
-            updatePreviews(searchBar.value);
-        });
+        packFilter.addEventListener('change', () => updatePreviews(false));
 
         heightField = document.getElementById('height');
         widthField = document.getElementById('width');
@@ -163,6 +160,7 @@ function oncancel() {
 function onclear(calledFromSubmit) {
     selected.innerHTML = '';
     searchBar.value = '';
+    previousSearchRegex = null;
     previews.innerHTML = NOTHING_TO_SHOW;
     styleFilter.value = 'all';
     packFilter.value = 'all';
@@ -182,23 +180,35 @@ function onsubmit(selection) {
 
 /**
  * Updates the previews based on user inputs
- * @param {string} search The current value of the search box
+ * @param {string} searchChanged Whether or not the function has been called due to a change in the search bar's value
  */
-function updatePreviews(search) {
+function updatePreviews(searchChanged) {
+    const search = searchBar.value;
     const regex = new RegExp(search.replace(/[ -]+/g, ''), 'i');
-    previews.innerHTML = '';
-    Object.keys(icons).forEach(async name => {
-        const currentIcon = icons[name];
-        if(regex.test(name) || currentIcon.search.some(term => regex.test(term))) {
-            currentIcon.packs.forEach(async pack => {
-                if(['all', pack].includes(packFilter.value)) {
-                    currentIcon.svg[pack].styles.forEach(async style => {
-                        if(['all', style].includes(styleFilter.value)) addPreview(name, pack, style);
-                    });
-                }
-            });
+    // The icons are guaranteed to have already been found by the previous search
+    if(searchChanged && previousSearchRegex && previousSearchRegex.test(search)) {
+        const previewsArr = previews.childNodes;
+        for(let i = previewsArr.length - 1; i >= 0; i--) {
+            const name = previewsArr[i].getAttribute('name');
+            if(!regex.test(name) && !icons[name].search.some(term => regex.test(term))) previews.removeChild(previewsArr[i]);
         }
-    });
+    // The icons have not all been found by the previous search
+    } else {
+        previews.innerHTML = '';
+        Object.keys(icons).forEach(async name => {
+            const currentIcon = icons[name];
+            if(regex.test(name) || currentIcon.search.some(term => regex.test(term))) {
+                currentIcon.packs.forEach(async pack => {
+                    if(['all', pack].includes(packFilter.value)) {
+                        currentIcon.svg[pack].styles.forEach(async style => {
+                            if(['all', style].includes(styleFilter.value)) addPreview(name, pack, style);
+                        });
+                    }
+                });
+            }
+        });
+    }
+    previousSearchRegex = regex;
 }
 
 /**
