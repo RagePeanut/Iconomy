@@ -1,5 +1,5 @@
-# Fast Icons (0.1.5)
-**Fast Icons** is a plugin for **Adobe XD** that aims to help you with finding the right icons for your artboards by letting you search through an ever growing library of icons coming from hand-picked free icon packs.
+# Iconomy (0.1.5)
+**Iconomy** is a plugin for **Adobe XD** that aims to help you with finding the right icons for your artboards by letting you search through an ever growing library of icons coming from hand-picked free icon packs.
 
 ## Supported packs
 Pack | Version | Regular | Solid | Brands
@@ -12,11 +12,11 @@ Pack | Version | Regular | Solid | Brands
 
 ## Install
 
-**Fast Icons** is still in its infancy and has therefore not yet been submitted for review to **Adobe XD**. You can however install it on your local machine by following those simple steps.
+**Iconomy** is still in its infancy and has therefore not yet been submitted for review to **Adobe XD**. You can however install it on your local machine by following those simple steps.
 
 ### 1. Clone this repository
 ```
-git clone https://github.com/RagePeanut/fast-icons.git
+git clone https://github.com/RagePeanut/Iconomy.git
 ```
 ### 2. Edit manifest.json
 
@@ -24,35 +24,35 @@ The `manifest.json` file specifies a few settings for this plugin. You can chang
 
 ### 3. Create the plugin installer
 
-Select all the files inside the `fast-icons` folder (don't select the folder itself) then right click on them. Click on `Send to` and then `Compressed (zipped) folder`. Once the files have been compressed to a ZIP file, rename that file to `fast-icons.xdx`.
+Select all the files inside the `iconomy` folder (don't select the folder itself) then right click on them. Click on `Send to` and then `Compressed (zipped) folder`. Once the files have been compressed to a ZIP file, rename that file to `iconomy.xdx`.
 
 ### 4. Install the plugin
-Double-click on `fast-icons.xdx`, this should execute **Adobe XD** if it isn't already running. The installation doesn't usually happen immediately, wait a few minutes and you should see a pop-up asking you if you want to install the **Fast Icons** plugin. Click *Install* and voilà ! **Fast Icons** should now be visible in the plugins menu.
+Double-click on `iconomy.xdx`, this should execute **Adobe XD** if it isn't already running. The installation doesn't usually happen immediately, wait a few minutes and you should see a pop-up asking you if you want to install the **Iconomy** plugin. Click *Install* and voilà ! **Iconomy** should now be visible in the plugins menu.
 
 ## How to use
-To open the **Fast Icons** window, you have two options. You can either use the shortcut assigned to your system (`CTRL+SHIFT+W` for **Windows** and `CMD+SHIFT+W` for **Mac**) or click on the burger menu item then on *Plugins* and then on *Insert Icons*. Once the window is opened you will be presented with a few fields, let's explore them one after another.
+To open the **Iconomy** window, you have two options. You can either use the shortcut assigned to your system (`CTRL+SHIFT+W` for **Windows** and `CMD+SHIFT+W` for **Mac**) or click on the burger menu item then on *Plugins* and then on *Insert Icons*. Once the window is opened you will be presented with a few fields, let's explore them one after another.
 <p align="center">
   <img src="https://cdn.steemitimages.com/DQmbLvKH52NHLQA5XMHBqbB1q1Rn6RtttD3XD1kzBegk189/ui.png">
 </p>
 
 ### 1. The search bar
-As expected, the search bar just below the *Fast Icons* title is used to type words related to the icons you want to find. For example, if you want to find icons related to birds, you can type *bird* and a list of icons will appear. The search bar is case insensitive and ignores hyphens and spaces.
+As expected, the search bar just below the *Iconomy* title is used to type words related to the icons you want to find. For example, if you want to find icons related to birds, you can type *bird* and a list of icons will appear. The search bar is case insensitive and ignores hyphens and spaces.
 ### 2. The pack drop-down
 The *Pack* drop-down lets you pick the pack you want the icons to come from. We can now for example refine our search for birds by selecting ***Font Awesome*** as the desired pack. The default *All* option shows icons from all packs, it is not yet possible to show icons from some of the packs.
 ### 3. The style drop-down
 The *Style* drop-down lets you pick the style you want the icons to have. Three options are available: *regular*, *solid* and *brands*. There is no plan to add another option to that list as most packs categorize their icons that way. Continuing on with our birds example, we can select *solid* and see that *brands* and *regular* icons are immediately removed from the icons lists.
 ### 4. The height field
-The *Height* field lets you specify the height you want your icon to have when it gets added to your artboard. It accepts decimal numbers as long as the decimal separator is represented by a point. By default, the height is set to 40px which is the same as the size of the icons being shown on the **Fast Icons** window.
+The *Height* field lets you specify the height you want your icon to have when it gets added to your artboard. It accepts decimal numbers as long as the decimal separator is represented by a point. By default, the height is set to 40px which is the same as the size of the icons being shown on the **Iconomy** window.
 ### 5. The max width field
 The *Max Width* field lets you specify the maximum width you want your icon to have when it gets added to your artboard. If an icon has a width bigger than the maximum width after scaling based on the desired height, it will be scaled back to a size that matches the maximum width. By default, the maximum width is equal to the height.
 ### 6. The selectable icons
 Selecting an icon is as simple as clicking on it in the least of selectable icons that get updated on every input. Once clicked, the icon will appear in the list of selected icons in the bottom left corner of the window.
 ### 7. The selected icons
-The selected icons can be unselected at any time. Unselecting an icon is as simple as clicking on it in the list of selected icons that can be found in the bottom left corner of the **Fast Icons** window.
+The selected icons can be unselected at any time. Unselecting an icon is as simple as clicking on it in the list of selected icons that can be found in the bottom left corner of the **Iconomy** window.
 ### 8. The clear button
-The *Clear* button will remove all the user inputs from the **Fast Icons** window as well as clear the selectable and selected icons. 
+The *Clear* button will remove all the user inputs from the **Iconomy** window as well as clear the selectable and selected icons. 
 ### 9. The cancel button
-The *Cancel* button will close the **Fast Icons** window without affecting your artboard whatsoever. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins).
+The *Cancel* button will close the **Iconomy** window without affecting your artboard whatsoever. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins).
 ### 10. The add button
 The *Add* button will add the selected icons to your artboard. They should be presented in a row nicely spaced but it is not guaranteed as a bug can happen from time to time making some of them appear one on top of another. Clicking on the *Add* button will set all the fields back to their default values except for *Height* and *Max Width* which will stay at the same values as before.
 

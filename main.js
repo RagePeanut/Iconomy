@@ -33,7 +33,7 @@ function insertIconsFunctionHandler(selection) {
         dialog.innerHTML = `
 <link rel="stylesheet" type="text/css" href="dialog.css">
 <form method="dialog">
-    <h1>Fast Icons</h1>
+    <h1>Iconomy</h1>
     <input id="search" type="text" placeholder="Search an icon...">
     <div id="filters" class="row">
         <div>
