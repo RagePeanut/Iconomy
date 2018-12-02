@@ -32,7 +32,7 @@ Double-click on `iconomy.xdx`, this should execute **Adobe XD** if it isn't alre
 ## How to use
 To open the **Iconomy** window, you have two options. You can either use the shortcut assigned to your system (`CTRL+SHIFT+W` for **Windows** and `CMD+SHIFT+W` for **Mac**) or click on the burger menu item then on *Plugins* and then on *Insert Icons*. Once the window is opened you will be presented with a few fields, let's explore them one after another.
 <p align="center">
-  <img src="https://cdn.steemitimages.com/DQmbLvKH52NHLQA5XMHBqbB1q1Rn6RtttD3XD1kzBegk189/ui.png">
+  <img src="https://cdn.steemitimages.com/DQme6JhMMxfPtDeLRPMQEjgBsJQAqqCWTR2FsG9BMCJmSMR/ui.png">
 </p>
 
 ### 1. The search bar
