@@ -46,15 +46,15 @@ The *Height* field lets you specify the height you want your icon to have when i
 ### 5. The max width field
 The *Max Width* field lets you specify the maximum width you want your icon to have when it gets added to your artboard. If an icon has a width bigger than the maximum width after scaling based on the desired height, it will be scaled back to a size that matches the maximum width. By default, the maximum width is equal to the height.
 ### 6. The selectable icons
-Selecting an icon is as simple as clicking on it in the least of selectable icons that get updated on every input. Once clicked, the icon will appear in the list of selected icons in the bottom left corner of the window.
+Selecting an icon is as simple as clicking on it in the list of selectable icons that get updated on every input. Once clicked, the icon will appear in the list of selected icons in the bottom left corner of the window.
 ### 7. The selected icons
 The selected icons can be unselected at any time. Unselecting an icon is as simple as clicking on it in the list of selected icons that can be found in the bottom left corner of the **Iconomy** window.
 ### 8. The clear button
-The *Clear* button will remove all the user inputs from the **Iconomy** window as well as clear the selectable and selected icons. 
+The *Clear* button removes all the user inputs from the **Iconomy** window and clears the selectable and selected icons lists. 
 ### 9. The cancel button
-The *Cancel* button will close the **Iconomy** window without affecting your artboard whatsoever. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins).
+The *Cancel* button closes the **Iconomy** window. Fields are not set back to their default values on cancel and will have the same value the next time you open that window (assuming you don't close **Adobe XD** in between or refresh the plugins).
 ### 10. The add button
-The *Add* button will add the selected icons to your artboard. They should be presented in a row nicely spaced but it is not guaranteed as a bug can happen from time to time making some of them appear one on top of another. Clicking on the *Add* button will set all the fields back to their default values except for *Height* and *Max Width* which will stay at the same values as before.
+The *Add* button adds the selected icons to the current artboard. They should be presented in a row nicely spaced but it is not guaranteed as a bug can happen from time to time making some of them appear one on top of another. Clicking on the *Add* button sets all the fields back to their default values except for *Height* and *Max Width* which will stay at the same values as before.
 
 ## Known issues
 * **The search bar can't always be set back to an empty string.** A workaround until this gets fixed is to type a space in the search bar field instead of an empty string since spaces are ignored when filtering icons.
